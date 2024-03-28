@@ -1,0 +1,80 @@
+# Go-Python Code Sandbox
+
+This application provides a REST API to execute Python code snippets securely in a sandboxed environment. It's built with Go using the GoFiber v2 framework for the backend service, and it executes Python code via a subprocess, combining the performance of Go with the versatility of Python.
+
+## Getting Started
+
+These instructions will guide you through setting up and running the application on your local machine for development and testing purposes.
+
+### Prerequisites
+
+- Docker
+- Go (if you wish to build the application locally)
+- Python (for running Python scripts)
+
+### Installation and Running with Docker
+
+1. **Build the Docker Image**
+
+   Navigate to the project directory where the Dockerfile is located and run the following command:
+
+   ```bash
+   docker build -t eternal-sandbox .
+   ```
+
+2. **Run the Container**
+
+   After building the image, you can run the container using:
+
+   ```bash
+   docker run -d -p 5000:5000 eternal-sandbox
+   ```
+
+   This command runs the container in detached mode and maps the container's port 5000 to port 5000 on the host, allowing you to access the application at `http://localhost:5000`.
+
+## Usage
+
+The application exposes a single endpoint `/execute` which accepts POST requests. The body of the request should be a JSON object containing the Python code to be executed.
+
+### API Endpoint
+
+- **POST** `/execute`
+
+  **Body:**
+
+  ```json
+  {
+    "code": "print('Hello, world!')"
+  }
+  ```
+
+  **Response:**
+
+  ```json
+  {
+    "status": "success",
+    "result": "Hello, world!\n"
+  }
+  ```
+
+### Example with cURL
+
+Here is how you can test the application using `curl`:
+
+```bash
+curl -X POST http://localhost:5000/execute \
+     -H "Content-Type: application/json" \
+     -d '{"code":"print(42)"}'
+```
+
+## Security Considerations
+
+Executing arbitrary code can be very risky. This application implements basic security measures, but it is highly recommended to run it in a securely isolated environment and to implement further security checks according to your needs.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit pull requests or open issues to discuss proposed changes or improvements.
+
+## License
+
+This project is open source and available under the MIT License.

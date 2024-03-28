@@ -17,7 +17,7 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main .
 
 # Start a new stage from python base image
-FROM python:3.9
+FROM python:3.10-slim
 
 # Set the Current Working Directory inside the container
 WORKDIR /app
